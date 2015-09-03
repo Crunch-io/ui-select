@@ -1,7 +1,7 @@
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
- * Version: 0.12.0 - 2015-08-06T00:03:40.537Z
+ * Version: 0.12.0 - 2015-09-03T21:21:51.821Z
  * License: MIT
  */
 
@@ -486,7 +486,7 @@ uis.controller('uiSelectCtrl',
           // if taggingLabel is disabled, we pull from ctrl.search val
           if ( ctrl.taggingLabel === false ) {
             if ( ctrl.activeIndex < 0 ) {
-              item = ctrl.tagging.fct !== undefined ? ctrl.tagging.fct(ctrl.search) : ctrl.search;
+              item = ctrl.tagging.fct !== undefined ? ctrl.tagging.fct(ctrl.search || item) : ctrl.search;
               if (!item || angular.equals( ctrl.items[0], item ) ) {
                 return;
               }
