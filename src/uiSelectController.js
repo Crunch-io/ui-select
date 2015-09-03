@@ -249,12 +249,11 @@ uis.controller('uiSelectCtrl',
           // if taggingLabel is disabled, we pull from ctrl.search val
           if ( ctrl.taggingLabel === false ) {
             if ( ctrl.activeIndex < 0 ) {
-              item = ctrl.tagging.fct !== undefined ? ctrl.tagging.fct(ctrl.search || item) : ctrl.search;
-              if (!item || angular.equals( ctrl.items[0], item ) ) {
-                return;
-              }
-            } else {
-              // keyboard nav happened first, user selected from dropdown
+                item = ctrl.tagging.fct !== undefined ? ctrl.tagging.fct(ctrl.search || item) : ctrl.search;
+                if (!item || angular.equals( ctrl.items[0], item ) ) {
+                  return;
+                }
+            } else if (!skipFocusser){
               item = ctrl.items[ctrl.activeIndex];
             }
           } else {
