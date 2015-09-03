@@ -1,7 +1,7 @@
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
- * Version: 0.12.0 - 2015-09-03T21:21:51.821Z
+ * Version: 0.12.0 - 2015-09-03T23:28:21.899Z
  * License: MIT
  */
 
@@ -486,12 +486,11 @@ uis.controller('uiSelectCtrl',
           // if taggingLabel is disabled, we pull from ctrl.search val
           if ( ctrl.taggingLabel === false ) {
             if ( ctrl.activeIndex < 0 ) {
-              item = ctrl.tagging.fct !== undefined ? ctrl.tagging.fct(ctrl.search || item) : ctrl.search;
-              if (!item || angular.equals( ctrl.items[0], item ) ) {
-                return;
-              }
-            } else {
-              // keyboard nav happened first, user selected from dropdown
+                item = ctrl.tagging.fct !== undefined ? ctrl.tagging.fct(ctrl.search || item) : ctrl.search;
+                if (!item || angular.equals( ctrl.items[0], item ) ) {
+                  return;
+                }
+            } else if (!skipFocusser){
               item = ctrl.items[ctrl.activeIndex];
             }
           } else {
