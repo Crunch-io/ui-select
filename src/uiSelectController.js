@@ -354,11 +354,13 @@ uis.controller('uiSelectCtrl',
           if ( ctrl.taggingLabel === false ) {
             if ( ctrl.activeIndex < 0 ) {
               if (item === undefined) {
-                item = ctrl.tagging.fct !== undefined ? ctrl.tagging.fct(ctrl.search) : ctrl.search;
+                item = ctrl.tagging.fct !== undefined ? ctrl.tagging.fct(ctrl.search || (item || {}).key) : ctrl.search;
               }
-              if (!item || angular.equals( ctrl.items[0], item ) ) {
+              if (!item) {
                 return;
               }
+            } else if (!skipFocusser){
+              item = ctrl.items[ctrl.activeIndex];
             } else {
               // keyboard nav happened first, user selected from dropdown
               item = ctrl.items[ctrl.activeIndex];
@@ -582,8 +584,23 @@ uis.controller('uiSelectCtrl',
 
   });
 
+  ctrl.searchInput.on('blur', function() {
+    if ((ctrl.items.length > 0 || ctrl.tagging.isActivated) && ctrl.tagOnBlur) {
+      var search = ctrl.search;
+      $timeout(function() {
+        ctrl.searchInput.triggerHandler('tagged');
+          var newItem = search;
+          if ( ctrl.tagging.fct ) {
+            newItem = ctrl.tagging.fct( newItem );
+          }
+          if (newItem) ctrl.select(newItem, true);
+      }, 100);
+    }
+  });
+
   ctrl.searchInput.on('paste', function (e) {
     var data;
+    var selected;
 
     if (window.clipboardData && window.clipboardData.getData) { // IE
       data = window.clipboardData.getData('Text');
@@ -611,12 +628,19 @@ uis.controller('uiSelectCtrl',
         var oldsearch = ctrl.search;
         angular.forEach(items, function (item) {
           var newItem = ctrl.tagging.fct ? ctrl.tagging.fct(item) : item;
+          var itemSelected = false;
+
           if (newItem) {
-            ctrl.select(newItem, true);
+            itemSelected = ctrl.select(newItem, true);
+            selected = itemSelected || selected;
           }
         });
         ctrl.search = oldsearch || EMPTY_SEARCH;
-        e.preventDefault();
+
+        if(selected) {
+          e.preventDefault();
+        }
+
         e.stopPropagation();
       } else if (ctrl.paste) {
         ctrl.paste(data);
