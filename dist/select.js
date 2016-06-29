@@ -1,7 +1,7 @@
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
- * Version: 0.18.0 - 2016-06-28T12:43:16.837Z
+ * Version: 0.18.0 - 2016-06-29T12:34:43.769Z
  * License: MIT
  */
 
@@ -1045,7 +1045,7 @@ uis.directive('uiSelect',
             var sortable = scope.$eval(attrs.sortable);
             $select.sortable = sortable !== undefined ? sortable : uiSelectConfig.sortable;
         });
-        
+
         attrs.$observe('limit', function() {
           //Limit the number of selections allowed
           $select.limit = (angular.isDefined(attrs.limit)) ? parseInt(attrs.limit, 10) : undefined;
@@ -1069,6 +1069,17 @@ uis.directive('uiSelect',
 
         attrs.$observe('paste', function() {
           $select.paste = scope.$eval(attrs.paste);
+        });
+
+        attrs.$observe('tagOnBlur', function() {
+          if(attrs.tagOnBlur !== undefined && attrs.tagOnBlur === 'true')
+          {
+              $select.tagOnBlur = true;
+          }
+          else
+          {
+              $select.tagOnBlur = false;
+          }
         });
 
         attrs.$observe('tagging', function() {
