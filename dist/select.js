@@ -1,7 +1,7 @@
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
- * Version: 0.18.0 - 2016-06-29T12:34:43.769Z
+ * Version: 0.18.0 - 2017-02-01T16:09:13.721Z
  * License: MIT
  */
 
@@ -853,12 +853,14 @@ uis.controller('uiSelectCtrl',
     if ((ctrl.items.length > 0 || ctrl.tagging.isActivated) && ctrl.tagOnBlur) {
       var search = ctrl.search;
       $timeout(function() {
-        ctrl.searchInput.triggerHandler('tagged');
-          var newItem = search;
-          if ( ctrl.tagging.fct ) {
-            newItem = ctrl.tagging.fct( newItem );
-          }
-          if (newItem) ctrl.select(newItem, true);
+        var newItem = search;
+        if ( ctrl.tagging.fct ) {
+          newItem = ctrl.tagging.fct( newItem );
+        }
+        if (newItem) {
+          ctrl.searchInput.triggerHandler('tagged');
+          ctrl.select(newItem, true);
+        }
       }, 100);
     }
   });
