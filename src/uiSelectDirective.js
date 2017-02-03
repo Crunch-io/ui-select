@@ -94,6 +94,11 @@ uis.directive('uiSelect',
           $select.limit = (angular.isDefined(attrs.limit)) ? parseInt(attrs.limit, 10) : undefined;
         });
 
+        attrs.$observe('dropdownMinSearch', function() {
+          // display dropdown only when search input length is equal or greater than this
+          $select.dropdownMinSearch = (angular.isDefined(attrs.dropdownMinSearch)) ? parseInt(attrs.dropdownMinSearch, 10) : uiSelectConfig.dropdownMinSearch;
+        });
+
         scope.$watch('removeSelected', function() {
             var removeSelected = scope.$eval(attrs.removeSelected);
             $select.removeSelected = removeSelected !== undefined ? removeSelected : uiSelectConfig.removeSelected;
