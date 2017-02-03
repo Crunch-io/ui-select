@@ -477,6 +477,16 @@ uis.controller('uiSelectCtrl',
     return false;
   };
 
+  ctrl.isDropdownVisible = function () {
+    if (!ctrl.open) return false;
+
+    if (ctrl.multiple && !ctrl.items.length) return false;
+
+    if (ctrl.searchEnabled && ctrl.search.length < ctrl.dropdownMinSearch) return false;
+
+    return true;
+  };
+
   $scope.$watch(function () {
     return angular.isDefined(ctrl.lockChoiceExpression) && ctrl.lockChoiceExpression !== "";
   }, _initaliseLockedChoices);
