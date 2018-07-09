@@ -389,7 +389,7 @@ uis.controller('uiSelectCtrl',
         if(ctrl.tagging.isActivated && ctrl.clickTriggeredSelect === false) {
           // if taggingLabel is disabled and item is undefined we pull from ctrl.search
           if ( ctrl.taggingLabel === false ) {
-            if ( ctrl.activeIndex < 0 ) {
+            if ( ctrl.activeIndex < 0 || skipFocusser ) {
               if (item === undefined) {
                 item = ctrl.tagging.fct !== undefined ? ctrl.tagging.fct(ctrl.search || (item || {}).key) : ctrl.search;
               }
